@@ -1,0 +1,21 @@
+<section class="auth-wrapper card">
+  <h2>Connexion</h2>
+  <p>Accédez à votre espace de suivi des appels d'offres.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Email
+      <input type="email" formControlName="email" placeholder="contact@entreprise.ma" />
+    </label>
+
+    <label>
+      Mot de passe
+      <input type="password" formControlName="password" placeholder="******" />
+    </label>
+
+    <button class="btn-primary" type="submit" [disabled]="loading">Se connecter</button>
+    <small *ngIf="errorMessage" class="error">{{ errorMessage }}</small>
+  </form>
+
+  <a routerLink="/register">Pas encore de compte ? Créer un compte</a>
+</section>

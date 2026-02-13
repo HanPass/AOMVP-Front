@@ -1,0 +1,32 @@
+<section class="auth-wrapper card">
+  <h2>Inscription</h2>
+  <p>Créez votre compte fournisseur AOMVP.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Raison sociale
+      <input type="text" formControlName="companyName" placeholder="Votre société" />
+    </label>
+
+    <label>
+      Email
+      <input type="email" formControlName="email" placeholder="contact@entreprise.ma" />
+    </label>
+
+    <label>
+      Mot de passe
+      <input type="password" formControlName="password" placeholder="******" />
+    </label>
+
+    <label class="checkbox">
+      <input type="checkbox" formControlName="acceptTerms" />
+      J'accepte les conditions d'utilisation
+    </label>
+
+    <button class="btn-primary" type="submit">Créer mon compte</button>
+    <small *ngIf="successMessage" class="success">{{ successMessage }}</small>
+    <small *ngIf="errorMessage" class="error">{{ errorMessage }}</small>
+  </form>
+
+  <a routerLink="/login">Déjà inscrit ? Se connecter</a>
+</section>
