@@ -4,7 +4,6 @@ Front-end Angular pour le projet AOMVP.
 
 ## Fonctionnalités livrées
 
-- Page d'accueil de présentation (landing page).
 - Pages d'authentification: connexion et inscription.
 - Dashboard avec KPI et visualisation simple.
 - Listing des appels d'offres avec filtres (texte, secteur, statut).
