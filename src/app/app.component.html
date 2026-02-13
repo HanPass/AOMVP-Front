@@ -1,0 +1,17 @@
+<header class="topbar">
+  <h1>AOMVP Front</h1>
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+    <a routerLink="/login" routerLinkActive="active">Connexion</a>
+    <a routerLink="/register" routerLinkActive="active">Inscription</a>
+
+    <ng-container *ngIf="isAuthenticated$ | async">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/ao" routerLinkActive="active">Appels d'offres</a>
+      <button type="button" class="logout-btn" (click)="logout()">Déconnexion</button>
+    </ng-container>
+  </nav>
+</header>
+<main>
+  <router-outlet></router-outlet>
+</main>

@@ -1,0 +1,37 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: #121a33;
+  color: #fff;
+}
+
+.topbar nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.topbar a {
+  color: #b8c6ff;
+  text-decoration: none;
+}
+
+.topbar a.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.logout-btn {
+  border: 1px solid #7f93e6;
+  background: transparent;
+  color: #dbe4ff;
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+main {
+  padding: 1.2rem;
+}

@@ -1,0 +1,48 @@
+<section class="card filters">
+  <h2>Listing des AO</h2>
+  <form [formGroup]="filtersForm" (ngSubmit)="loadAO()">
+    <input type="text" placeholder="Rechercher par référence ou intitulé" formControlName="query" />
+
+    <select formControlName="sector">
+      <option value="">Tous les secteurs</option>
+      <option *ngFor="let sector of sectors" [value]="sector">{{ sector }}</option>
+    </select>
+
+    <select formControlName="status">
+      <option value="">Tous les statuts</option>
+      <option *ngFor="let status of statuses" [value]="status.value">{{ status.label }}</option>
+    </select>
+
+    <div class="actions">
+      <button class="btn-primary" type="submit">Filtrer</button>
+      <button type="button" (click)="clearFilters()">Réinitialiser</button>
+    </div>
+  </form>
+</section>
+
+<section class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Référence</th>
+        <th>Intitulé</th>
+        <th>Secteur</th>
+        <th>Région</th>
+        <th>Budget</th>
+        <th>Publication</th>
+        <th>Échéance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of aoList">
+        <td>{{ item.reference }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.sector }}</td>
+        <td>{{ item.region }}</td>
+        <td>{{ item.budget | currency : 'MAD' : 'symbol' : '1.0-0' }}</td>
+        <td>{{ item.publicationDate | date }}</td>
+        <td>{{ item.deadlineDate | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
