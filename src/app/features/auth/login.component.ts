@@ -4,16 +4,17 @@ import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 import { AuthService } from '../../core/services/auth.service';
+import { SessionService } from '../../core/services/session.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: './login.component.html',
-  styleUrl: './auth.component.css'
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  readonly form = this.fb.group({
+  readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
@@ -24,6 +25,7 @@ export class LoginComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
+    private readonly sessionService: SessionService,
     private readonly router: Router
   ) {}
 
@@ -37,9 +39,10 @@ export class LoginComponent {
     this.loading = true;
     this.errorMessage = '';
 
-    this.authService.login(value.email ?? '', value.password ?? '').subscribe({
-      next: () => {
+    this.authService.login(value.email, value.password).subscribe({
+      next: ({ token }) => {
         this.loading = false;
+        this.sessionService.startSession(token, value.email);
         this.router.navigateByUrl('/dashboard');
       },
       error: () => {

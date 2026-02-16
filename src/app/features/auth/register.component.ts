@@ -10,10 +10,10 @@ import { AuthService } from '../../core/services/auth.service';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: './register.component.html',
-  styleUrl: './auth.component.css'
+  styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  readonly form = this.fb.group({
+  readonly form = this.fb.nonNullable.group({
     companyName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
@@ -40,9 +40,9 @@ export class RegisterComponent {
 
     this.authService
       .register({
-        companyName: companyName ?? '',
-        email: email ?? '',
-        password: password ?? ''
+        companyName,
+        email,
+        password
       })
       .subscribe({
         next: () => {

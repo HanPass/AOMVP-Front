@@ -1,0 +1,27 @@
+.auth-wrapper {
+  max-width: 460px;
+  margin: 2rem auto;
+  display: grid;
+  gap: 0.75rem;
+}
+
+form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+input {
+  border: 1px solid #d3daf7;
+  border-radius: 8px;
+  padding: 0.65rem;
+}
+
+.error {
+  color: #a52323;
+}
