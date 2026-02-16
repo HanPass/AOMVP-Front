@@ -1,0 +1,36 @@
+.hero {
+  margin-bottom: 1rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.kicker {
+  margin: 0;
+  color: #3556d8;
+  font-weight: 700;
+}
+
+.hero h2 {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.secondary {
+  border: 1px solid #b8c6ff;
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+  color: #24316b;
+  background: #f4f6ff;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}

@@ -1,0 +1,42 @@
+<section class="card preferences">
+  <h2>Mes préférences</h2>
+  <p>Personnalisez votre expérience utilisateur après connexion.</p>
+
+  <form [formGroup]="preferencesForm" (ngSubmit)="submit()">
+    <label>
+      Langue
+      <select formControlName="language">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+      </select>
+    </label>
+
+    <label>
+      Thème
+      <select formControlName="theme">
+        <option value="light">Clair</option>
+        <option value="dark">Sombre</option>
+      </select>
+    </label>
+
+    <label class="checkbox">
+      <input type="checkbox" formControlName="emailNotifications" />
+      Recevoir les notifications email
+    </label>
+
+    <label>
+      Vue dashboard par défaut
+      <select formControlName="dashboardDefaultView">
+        <option value="funnel">Vue funnel</option>
+        <option value="list">Vue liste</option>
+      </select>
+    </label>
+
+    <div class="actions">
+      <button class="btn-primary" [disabled]="loading" type="submit">Sauvegarder</button>
+    </div>
+
+    <small *ngIf="successMessage" class="success">{{ successMessage }}</small>
+    <small *ngIf="errorMessage" class="error">{{ errorMessage }}</small>
+  </form>
+</section>

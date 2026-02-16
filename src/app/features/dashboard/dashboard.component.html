@@ -1,0 +1,38 @@
+<section class="dashboard-grid">
+  <article class="card metric" *ngFor="let step of funnelSteps">
+    <span>{{ step.label }}</span>
+    <strong>{{ step.value }}</strong>
+  </article>
+</section>
+
+<section class="card chart-card">
+  <h3>Répartition des AO par phase</h3>
+  <div class="bars">
+    <div class="bar" *ngFor="let step of funnelSteps" [style.height.%]="(step.value / 24) * 100">
+      <span>{{ step.value }}</span>
+      <small>{{ step.label }}</small>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h3>AO à échéance proche</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Réf</th>
+        <th>Intitulé</th>
+        <th>Budget</th>
+        <th>Date limite</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{ item.reference }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.budget | currency : 'MAD' : 'symbol' : '1.0-0' }}</td>
+        <td>{{ item.deadlineDate | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

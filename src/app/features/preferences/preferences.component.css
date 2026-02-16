@@ -1,0 +1,40 @@
+.preferences {
+  max-width: 620px;
+  margin: 1rem auto;
+}
+
+form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+select,
+input {
+  border: 1px solid #d3daf7;
+  border-radius: 8px;
+  padding: 0.65rem;
+}
+
+.checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  font-weight: 400;
+}
+
+.actions {
+  margin-top: 0.2rem;
+}
+
+.success {
+  color: #1b7a33;
+}
+
+.error {
+  color: #a52323;
+}
