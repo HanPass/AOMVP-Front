@@ -13,7 +13,7 @@ import { AoService } from '../../core/services/ao.service';
   styleUrl: './ao-list.component.css'
 })
 export class AoListComponent implements OnInit {
-  readonly filtersForm = this.fb.group({
+  readonly filtersForm = this.fb.nonNullable.group({
     query: [''],
     sector: [''],
     status: ['']
