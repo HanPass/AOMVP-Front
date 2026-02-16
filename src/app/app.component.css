@@ -10,6 +10,7 @@
 .topbar nav {
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 .topbar a {
@@ -20,6 +21,27 @@
 .topbar a.active {
   color: #fff;
   font-weight: 600;
+}
+
+.user-indicator {
+  font-size: 0.9rem;
+  color: #dbe2ff;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid #405084;
+  border-radius: 999px;
+}
+
+.btn-logout {
+  border: 1px solid #6178c9;
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: #1b2850;
 }
 
 main {

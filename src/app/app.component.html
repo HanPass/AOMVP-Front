@@ -1,10 +1,17 @@
 <header class="topbar">
   <h1>AOMVP Front</h1>
   <nav>
-    <a routerLink="/login" routerLinkActive="active">Connexion</a>
-    <a routerLink="/register" routerLinkActive="active">Inscription</a>
-    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-    <a routerLink="/ao" routerLinkActive="active">Appels d'offres</a>
+    <ng-container *ngIf="isAuthenticated$ | async; else guestNav">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/ao" routerLinkActive="active">Appels d'offres</a>
+      <span class="user-indicator">Connecté : {{ (userEmail$ | async) ?? 'Utilisateur' }}</span>
+      <button type="button" class="btn-logout" (click)="logout()">Logout</button>
+    </ng-container>
+
+    <ng-template #guestNav>
+      <a routerLink="/login" routerLinkActive="active">Connexion</a>
+      <a routerLink="/register" routerLinkActive="active">Inscription</a>
+    </ng-template>
   </nav>
 </header>
 <main>
