@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
@@ -63,9 +64,8 @@ export class RegisterComponent {
           this.successMessage = 'Compte créé. Vous pouvez maintenant vous connecter.';
           setTimeout(() => this.router.navigateByUrl('/login'), 800);
         },
-        error: () => {
-          this.errorMessage =
-            "Échec de création du compte (API indisponible ou données invalides). Vérifiez que le backend AOMVP est démarré.";
+        error: (error) => {
+          this.errorMessage = this.extractErrorMessage(error);
         }
       });
   }
@@ -73,5 +73,24 @@ export class RegisterComponent {
   showError(controlName: 'companyName' | 'email' | 'password' | 'acceptTerms'): boolean {
     const control = this.form.controls[controlName];
     return control.invalid && (control.touched || this.submitted);
+  }
+
+  private extractErrorMessage(error: unknown): string {
+    if (error instanceof HttpErrorResponse) {
+      const apiMessage =
+        typeof error.error === 'string'
+          ? error.error
+          : error.error?.message || error.error?.error || error.error?.detail || '';
+
+      if (apiMessage) {
+        return `Échec de création du compte: ${apiMessage}`;
+      }
+    }
+
+    if (error instanceof Error && error.message) {
+      return `Échec de création du compte: ${error.message}`;
+    }
+
+    return "Échec de création du compte. Vérifiez le contrat d'API backend (route/payload) et réessayez.";
   }
 }
