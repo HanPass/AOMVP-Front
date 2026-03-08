@@ -31,7 +31,7 @@
       J'accepte les conditions d'utilisation
     </label>
 
-    <button class="btn-primary" type="submit">Créer mon compte</button>
+    <button class="btn-primary" type="submit" [disabled]="loading">{{ loading ? "Création..." : "Créer mon compte" }}</button>
     <small *ngIf="successMessage" class="success">{{ successMessage }}</small>
     <small *ngIf="errorMessage" class="error">{{ errorMessage }}</small>
   </form>
