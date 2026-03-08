@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { finalize } from 'rxjs/operators';
 
 import { AuthService } from '../../core/services/auth.service';
 
@@ -22,6 +23,8 @@ export class RegisterComponent {
 
   successMessage = '';
   errorMessage = '';
+  loading = false;
+  submitted = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -30,13 +33,23 @@ export class RegisterComponent {
   ) {}
 
   submit(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.submitted = true;
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.errorMessage = 'Merci de corriger les champs obligatoires avant de continuer.';
+      this.successMessage = '';
       return;
     }
 
     const { companyName, email, password } = this.form.getRawValue();
     this.errorMessage = '';
+    this.successMessage = '';
+    this.loading = true;
 
     this.authService
       .register({
@@ -44,14 +57,21 @@ export class RegisterComponent {
         email,
         password
       })
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: () => {
           this.successMessage = 'Compte créé. Vous pouvez maintenant vous connecter.';
           setTimeout(() => this.router.navigateByUrl('/login'), 800);
         },
         error: () => {
-          this.errorMessage = 'Échec de création du compte.';
+          this.errorMessage =
+            "Échec de création du compte (API indisponible ou données invalides). Vérifiez que le backend AOMVP est démarré.";
         }
       });
+  }
+
+  showError(controlName: 'companyName' | 'email' | 'password' | 'acceptTerms'): boolean {
+    const control = this.form.controls[controlName];
+    return control.invalid && (control.touched || this.submitted);
   }
 }
