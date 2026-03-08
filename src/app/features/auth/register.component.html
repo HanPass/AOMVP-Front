@@ -14,24 +14,28 @@
     <label>
       Raison sociale
       <input type="text" formControlName="companyName" placeholder="Votre société" />
+      <small *ngIf="showError('companyName')" class="field-error">La raison sociale est obligatoire.</small>
     </label>
 
     <label>
       Email
       <input type="email" formControlName="email" placeholder="contact@entreprise.ma" />
+      <small *ngIf="showError('email')" class="field-error">Veuillez saisir un email valide.</small>
     </label>
 
     <label>
       Mot de passe
       <input type="password" formControlName="password" placeholder="******" />
+      <small *ngIf="showError('password')" class="field-error">Minimum 6 caractères.</small>
     </label>
 
     <label class="checkbox">
       <input type="checkbox" formControlName="acceptTerms" />
       J'accepte les conditions d'utilisation
     </label>
+    <small *ngIf="showError('acceptTerms')" class="field-error">Vous devez accepter les conditions.</small>
 
-    <button class="btn-primary" type="submit">Créer mon compte</button>
+    <button class="btn-primary" type="submit" [disabled]="loading">{{ loading ? 'Création...' : 'Créer mon compte' }}</button>
     <small *ngIf="successMessage" class="success">{{ successMessage }}</small>
     <small *ngIf="errorMessage" class="error">{{ errorMessage }}</small>
   </form>
