@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { finalize } from 'rxjs/operators';
 
 import { AuthService } from '../../core/services/auth.service';
 
@@ -22,6 +23,7 @@ export class RegisterComponent {
 
   successMessage = '';
   errorMessage = '';
+  loading = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -30,13 +32,15 @@ export class RegisterComponent {
   ) {}
 
   submit(): void {
-    if (this.form.invalid) {
+    if (this.form.invalid || this.loading) {
       this.form.markAllAsTouched();
       return;
     }
 
     const { companyName, email, password } = this.form.getRawValue();
     this.errorMessage = '';
+    this.successMessage = '';
+    this.loading = true;
 
     this.authService
       .register({
@@ -44,13 +48,14 @@ export class RegisterComponent {
         email,
         password
       })
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: () => {
           this.successMessage = 'Compte créé. Vous pouvez maintenant vous connecter.';
           setTimeout(() => this.router.navigateByUrl('/login'), 800);
         },
         error: () => {
-          this.errorMessage = 'Échec de création du compte.';
+          this.errorMessage = "Échec de création du compte. Vérifiez que l'API backend est démarrée.";
         }
       });
   }
