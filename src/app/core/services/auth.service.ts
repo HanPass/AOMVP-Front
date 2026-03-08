@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, timeout } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
@@ -40,6 +40,6 @@ export class AuthService {
   }
 
   private postRegister(url: string, payload: Record<string, string>): Observable<void> {
-    return this.http.post(url, payload, { responseType: 'text' }).pipe(map(() => void 0));
+    return this.http.post(url, payload, { responseType: 'text' }).pipe(timeout(10000), map(() => void 0));
   }
 }

@@ -24,6 +24,7 @@ export class RegisterComponent {
   successMessage = '';
   errorMessage = '';
   loading = false;
+  submitted = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -32,8 +33,16 @@ export class RegisterComponent {
   ) {}
 
   submit(): void {
-    if (this.form.invalid || this.loading) {
+    if (this.loading) {
+      return;
+    }
+
+    this.submitted = true;
+
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.errorMessage = 'Merci de corriger les champs obligatoires avant de continuer.';
+      this.successMessage = '';
       return;
     }
 
@@ -55,8 +64,14 @@ export class RegisterComponent {
           setTimeout(() => this.router.navigateByUrl('/login'), 800);
         },
         error: () => {
-          this.errorMessage = "Échec de création du compte. Vérifiez que l'API backend est démarrée.";
+          this.errorMessage =
+            "Échec de création du compte (API indisponible ou données invalides). Vérifiez que le backend AOMVP est démarré.";
         }
       });
+  }
+
+  showError(controlName: 'companyName' | 'email' | 'password' | 'acceptTerms'): boolean {
+    const control = this.form.controls[controlName];
+    return control.invalid && (control.touched || this.submitted);
   }
 }
