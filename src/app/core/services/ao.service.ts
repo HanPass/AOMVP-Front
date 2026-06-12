@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { AO } from '../models/ao.model';
 import { environment } from '../../../environments/environment';
@@ -68,6 +69,48 @@ export class AoService {
       }
     });
 
-    return this.http.get<AO[]>(`${environment.apiUrl}/ao`, { params });
+    return this.http.get<BackendAO[]>(`${environment.apiUrl}/ao`, { params }).pipe(
+      map((items) => items.map((item, index) => this.toAO(item, index)))
+    );
   }
+
+  private toAO(item: BackendAO, index: number): AO {
+    return {
+      id: item.id ?? index + 1,
+      reference: item.reference ?? '',
+      title: item.title ?? item.objet ?? '',
+      sector: item.sector ?? item.domaine ?? 'Non classe',
+      region: item.region ?? item.lieuExec ?? '',
+      budget: Number(item.budget ?? item.budgetEstime ?? 0),
+      publicationDate: item.publicationDate ?? item.datePublication ?? '',
+      deadlineDate: item.deadlineDate ?? item.dateLimite ?? '',
+      status: item.status ?? this.statusFromDeadline(item.deadlineDate ?? item.dateLimite)
+    };
+  }
+
+  private statusFromDeadline(deadline?: string): AO['status'] {
+    if (!deadline) {
+      return 'open';
+    }
+
+    return new Date(deadline).getTime() >= Date.now() ? 'open' : 'closed';
+  }
+}
+
+interface BackendAO {
+  id?: number;
+  reference?: string;
+  title?: string;
+  objet?: string;
+  sector?: string;
+  domaine?: string;
+  region?: string;
+  lieuExec?: string;
+  budget?: number;
+  budgetEstime?: number | string;
+  publicationDate?: string;
+  datePublication?: string;
+  deadlineDate?: string;
+  dateLimite?: string;
+  status?: AO['status'];
 }
