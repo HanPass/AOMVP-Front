@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: '/api',
+  apiUrl: 'https://aomvp-backend.onrender.com/api',
   useBackend: true
 };
